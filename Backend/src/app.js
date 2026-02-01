@@ -1,8 +1,12 @@
 const express = require("express");
 const noteModel = require("./model/note.model");
+const cors = require("cors")
+
 const app = express();
 
+/**Middleware */
 app.use(express.json());
+app.use(cors())
 
 /**POST method */
 app.post("/api/note", async (req, res) => {
