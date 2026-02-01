@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -29,10 +29,12 @@ function App() {
     },
   ]);
 
-  axios.get("http://localhost:3000/api/note") 
-  .then((res)=>{
-    res.data(setNotes)
-  })
+  axios
+    .get("http://localhost:3000/api/note") /**Fetching all data from backend */
+    .then((res) => {
+      setNotes(res.data.note);
+    });
+
   return (
     <>
       <div className="notes">

@@ -36,4 +36,7 @@ body,
   padding: 1rem;
   border-radius: 0.7rem;
   max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
