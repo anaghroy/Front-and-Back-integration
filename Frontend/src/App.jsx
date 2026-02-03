@@ -1,33 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Trash2 } from "lucide-react";
+import { SquarePen, Trash2 } from "lucide-react";
 function App() {
-  const [notes, setNotes] = useState([
-    {
-      title: "test 1",
-      age: "25",
-      place: "place",
-      description: "test description",
-    },
-    {
-      title: "test 2",
-      age: "25",
-      place: "place",
-      description: "test description",
-    },
-    {
-      title: "test 3",
-      age: "25",
-      place: "place",
-      description: "test description",
-    },
-    {
-      title: "test 4",
-      age: "25",
-      description: "test description",
-      place: "place",
-    },
-  ]);
+  const [notes, setNotes] = useState([]);
+  const [editNoteID, setEditNoteID] = useState(null);
+  const [editDescription, setEditDescription] = useState("");
 
   /**All Notes */
   function fetchNotes() {
@@ -64,14 +41,31 @@ function App() {
 
   /**Delete by note ID */
   function handleDeleteNote(noteId) {
-    axios
-      .delete("http://localhost:3000/api/note/"+noteId, )
-      .then((res) => {
-        // console.log(res.data)
-        fetchNotes();
-      });
+    axios.delete("http://localhost:3000/api/note/" + noteId).then((res) => {
+      // console.log(res.data)
+      fetchNotes();
+    });
+  }
+  /**Start editing */
+  function handleEditClick(note) {
+    setEditNoteID(note._id);
+    setEditDescription(note.description);
   }
 
+  /**Update note only description */
+  function handleUpdateNote() {
+    axios
+      .patch("http://localhost:3000/api/note/" + editNoteID, {
+        description: editDescription,
+      })
+
+      .then(() => {
+        // console.log(res.data)
+        fetchNotes();
+        setEditNoteID(null);
+        setEditDescription("");
+      });
+  }
   return (
     <>
       <form className="create-note-form" onSubmit={createNotes}>
@@ -101,9 +95,31 @@ function App() {
         {notes.map((note, index) => {
           return (
             <div className="note" key={index}>
-              <h1>{note.title}</h1>
+              <div className="title">
+                <h1>{note.title}</h1>
+                <div className="edit">
+                  <button
+                    onClick={() => {
+                      handleEditClick(note);
+                    }}
+                    className="pen"
+                  >
+                    <SquarePen />
+                  </button>
+                </div>
+              </div>
               <span>{note.age}</span>
-              <p>{note.description}</p>
+              {editNoteID === note._id ? (
+                <>
+                  <input
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                  />
+                  <button onClick={handleUpdateNote}>Save</button>
+                </>
+              ) : (
+                <p>{note.description}</p>
+              )}
               <span>{note.place}</span>
               <div className="del">
                 <button

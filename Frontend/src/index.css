@@ -41,6 +41,19 @@ body,
   gap: 0.5rem;
   width: 100%;
 }
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+.pen {
+  background-color: rgb(18, 67, 127);
+  color: whitesmoke;
+}
+.pen:hover {
+  background-color: whitesmoke;
+  color: rgb(18, 67, 127);
+  transition: all 0.3s ease-in-out;
+}
 .create-note-form {
   width: 100%;
   display: flex;
