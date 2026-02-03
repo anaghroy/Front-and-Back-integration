@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { SquarePen, Trash2 } from "lucide-react";
+import { Save, SquarePen, Trash2 } from "lucide-react";
 function App() {
   const [notes, setNotes] = useState([]);
   const [editNoteID, setEditNoteID] = useState(null);
@@ -34,7 +34,7 @@ function App() {
         description: description.value,
         place: place.value,
       })
-      .then((res) => {
+      .then(() => {
         fetchNotes();
       });
   }
@@ -115,7 +115,9 @@ function App() {
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
                   />
-                  <button onClick={handleUpdateNote}>Save</button>
+                  <button onClick={handleUpdateNote}>
+                    <Save />
+                  </button>
                 </>
               ) : (
                 <p>{note.description}</p>
