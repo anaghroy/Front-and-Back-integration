@@ -10,7 +10,7 @@ function App() {
   function fetchNotes() {
     axios
       .get(
-        "http://localhost:3000/api/note",
+        "https://front-and-back-integration-2.onrender.com/api/note",
       ) /**Fetching all data from backend */
       .then((res) => {
         setNotes(res.data.note);
@@ -28,7 +28,7 @@ function App() {
     const { title, age, description, place } = e.target.elements;
 
     axios
-      .post("http://localhost:3000/api/note", {
+      .post("https://front-and-back-integration-2.onrender.com/api/note", {
         title: title.value,
         age: age.value,
         description: description.value,
@@ -41,10 +41,14 @@ function App() {
 
   /**Delete by note ID */
   function handleDeleteNote(noteId) {
-    axios.delete("http://localhost:3000/api/note/" + noteId).then((res) => {
-      // console.log(res.data)
-      fetchNotes();
-    });
+    axios
+      .delete(
+        "https://front-and-back-integration-2.onrender.com/api/note/" + noteId,
+      )
+      .then((res) => {
+        // console.log(res.data)
+        fetchNotes();
+      });
   }
   /**Start editing */
   function handleEditClick(note) {
@@ -55,9 +59,13 @@ function App() {
   /**Update note only description */
   function handleUpdateNote() {
     axios
-      .patch("http://localhost:3000/api/note/" + editNoteID, {
-        description: editDescription,
-      })
+      .patch(
+        "https://front-and-back-integration-2.onrender.com/api/note/" +
+          editNoteID,
+        {
+          description: editDescription,
+        },
+      )
 
       .then(() => {
         // console.log(res.data)
